@@ -1,7 +1,9 @@
 <?php
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Register the module
+ *
+ * @author    Alexandre Pouey <apouey@volcom.com>
+ * @copyright 2017 Volcom
  */
 
 \Magento\Framework\Component\ComponentRegistrar::register(

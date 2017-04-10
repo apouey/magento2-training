@@ -1,9 +1,15 @@
 <?php
 /**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Magento 2 Training Project
+ * Module Training/Helloworld
  */
-namespace Magento\Catalog\Controller\Index;
+namespace Training\Helloworld\Controller\Index;
+/**
+ * Action: Index/Index
+ *
+ * @author    Alexandre Pouey <apouey@volcom.com>
+ * @copyright 2017 Volcom
+ */
 
 class Index extends \Magento\Framework\App\Action\Action
 {
@@ -14,7 +20,8 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        echo "hello world";
+
+        $this->getResponse()->appendBody('Hello World !');
     }
 }
 
