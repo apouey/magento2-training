@@ -6,6 +6,7 @@
 namespace Training\Seller\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Training\Seller\Api\Data\SellerInterface;
 
 /**
  * Seller interface.
@@ -20,7 +21,7 @@ interface SellerRepositoryInterface
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getById($sellerId);
+    public function getById($objectId);
 
 
     /**
@@ -30,7 +31,7 @@ interface SellerRepositoryInterface
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getByIdentifier($identifier);
+    public function getByIdentifier($objectIdentifier);
 
 
     /**
@@ -39,7 +40,7 @@ interface SellerRepositoryInterface
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
      * @return \Training\Seller\Api\Data\SellerSearchResultsInterface
      */
-    public function getList($searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria = null);
 
 
     /**
@@ -49,7 +50,7 @@ interface SellerRepositoryInterface
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(SellerInterface $seller);
+    public function save(SellerInterface $object);
 
 
     /**
@@ -60,7 +61,7 @@ interface SellerRepositoryInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function deleteById($sellerId);
+    public function deleteById($objectId);
 
     /**
      * Delete seller by Identifier.
@@ -71,5 +72,5 @@ interface SellerRepositoryInterface
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      *
      */
-    public function deleteByIdentifier($sellerIdentifier);
+    public function deleteByIdentifier($objectIdentifier);
 }
