@@ -71,7 +71,7 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
      */
     public function getIdentifier()
     {
-        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
+        return (string)$this->getData(self::FIELD_IDENTIFIER);
     }
 
 

@@ -17,7 +17,7 @@ interface SellerRepositoryInterface
     /**
      * Retrieve Seller by Id.
      *
-     * @param int $sellerId
+     * @param int $objectId
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -27,7 +27,7 @@ interface SellerRepositoryInterface
     /**
      * Retrieve Seller by Identifier.
      *
-     * @param int $identifier
+     * @param string $objectIdentifier
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
@@ -46,7 +46,7 @@ interface SellerRepositoryInterface
     /**
      * Save seller.
      *
-     * @param \Training\Seller\Api\Data\SellerInterface $seller
+     * @param \Training\Seller\Api\Data\SellerInterface $object
      * @return \Training\Seller\Api\Data\SellerInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
@@ -56,7 +56,7 @@ interface SellerRepositoryInterface
     /**
      * Delete seller by id
      *
-     * @param int $sellerId
+     * @param int $objectId
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
@@ -66,7 +66,7 @@ interface SellerRepositoryInterface
     /**
      * Delete seller by Identifier.
      *
-     * @param string $sellerIdentifier
+     * @param string $objectIdentifier
      * @return bool
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
