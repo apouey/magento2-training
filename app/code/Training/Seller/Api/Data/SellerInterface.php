@@ -61,7 +61,7 @@ interface SellerInterface
      *
      * @return string|null
      */
-    public function getUpdateAt();
+    public function getUpdatedAt();
 
     /**
      * Set ID

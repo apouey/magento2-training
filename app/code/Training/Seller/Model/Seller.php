@@ -49,17 +49,6 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
 
 
     /**
-     * Get Seller ID
-     *
-     * @param int $id
-     * @return BlockInterface
-     */
-    public function getSellerId()
-    {
-        return $this->getId();
-    }
-
-    /**
      * Get identities
      *
      * @return array
@@ -69,10 +58,25 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
         return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getSellerId()
+    {
+        return $this->getId();
+    }
 
     /**
-     * Get name
-     * @return string
+     * @inheritdoc
+     */
+    public function getIdentifier()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId(), self::CACHE_TAG . '_' . $this->getIdentifier()];
+    }
+
+
+    /**
+     * @inheritdoc
      */
     public function getName()
     {
@@ -80,9 +84,7 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
     }
 
     /**
-     * Get created At time
-     *
-     * @return string|null
+     * @inheritdoc
      */
     public function getCreatedAt()
     {
@@ -90,9 +92,7 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
     }
 
     /**
-     * Get updated At time
-     *
-     * @return string|null
+     * @inheritdoc
      */
     public function getUpdatedAt()
     {
@@ -101,56 +101,41 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
 
 
     /**
-     * Set Seller ID
-     *
-     * @param int $id
-     * @return BlockInterface
+     * @inheritdoc
      */
-    public function setSellerId($id)
+    public function setSellerId($value)
     {
         return $this->setId((int) $value);
     }
 
     /**
-     * Set identifier
-     *
-     * @param string $identifier
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @inheritdoc
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($value)
     {
         return $this->setData(self::FIELD_IDENTIFIER, (string) $value);
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @inheritdoc
      */
-    public function setName($name)
+    public function setName($value)
     {
         return $this->setData(self::FIELD_NAME, (string) $value);
     }
 
     /**
-     * Set creation time
-     *
-     * @param string $creationTime
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @inheritdoc
      */
-    public function setCreatedAt($creationTime)
+    public function setCreatedAt($value)
     {
         return $this->setData(self::FIELD_CREATED_AT, (string) $value);
     }
 
     /**
-     * Set update time
-     *
-     * @param string $updateTime
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @inheritdoc
      */
-    public function setUpdatedAt($updateTime)
+    function setUpdatedAt($value)
     {
         return $this->setData(self::FIELD_UPDATED_AT, (string) $value);
     }
