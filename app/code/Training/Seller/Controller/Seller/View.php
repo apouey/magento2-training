@@ -5,46 +5,44 @@
  */
 namespace Training\Seller\Controller\Seller;
 
-use Magento\Framework\App\Action\Context;
-use Training\Seller\Api\SellerRepositoryInterface;
-
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
- * Action: Seller/View
+ * Action : seller/view
  *
- * @author    Alexandre Pouey <apouey@volcom.com>
- * @copyright 2017 Volcom
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
  */
-
-class View extends \Magento\Framework\App\Action\Action
+class View extends AbstractAction
 {
-
-    protected $sellerRepositoryInterface;
-
     /**
-     * Index constructor.
-     * @param Context $context
-     * @param sellerRepositoryInterface $sellerRepositoryInterface
-     */
-    public function __construct(
-        Context $context,
-        sellerRepositoryInterface $sellerRepositoryInterface
-    ) {
-        parent::__construct($context);
-
-        $this->sellerRepositoryInterface = $sellerRepositoryInterface;
-    }
-
-    /**
+     * Execute the action
      *
+     * @return \Magento\Framework\View\Result\Page|null
      */
     public function execute()
     {
-        $sellerIdentifier = (string) $this->getRequest()->getParam('identifier');
+        // get the asked identifier
+        $identifier = trim($this->getRequest()->getParam('identifier'));
+        if (!$identifier) {
+            $this->_forward('noroute');
+            return null;
+        }
 
-        $result = $this->sellerRepositoryInterface->getByIdentifier($sellerIdentifier);
+        // get the asked seller
+        try {
+            $seller = $this->sellerRepository->getByIdentifier($identifier);
+        } catch (NoSuchEntityException $e) {
+            $this->_forward('noroute');
+            return null;
+        }
 
-        echo $result->getIdentifier() . $result->getName().'<br/>';
+        $this->registry->register('current_seller', $seller);
 
+        // display the page using the layout
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->set(__('Seller "%1"', $seller->getName()));
+
+        return $resultPage;
     }
 }

@@ -5,45 +5,83 @@
  */
 namespace Training\Seller\Controller\Seller;
 
-use Magento\Framework\App\Action\Context;
-use Training\Seller\Api\SellerRepositoryInterface;
-
+use Magento\Framework\Api\SortOrder;
+use Training\Seller\Api\Data\SellerInterface;
 
 /**
- * Action: Seller/Index
+ * Action : seller/index
  *
- * @author    Alexandre Pouey <apouey@volcom.com>
- * @copyright 2017 Volcom
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
  */
-
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends AbstractAction
 {
-
-    protected $sellerRepositoryInterface;
-
     /**
-     * Index constructor.
-     * @param Context $context
-     * @param sellerRepositoryInterface $sellerRepositoryInterface
-     */
-    public function __construct(
-        Context $context,
-        sellerRepositoryInterface $sellerRepositoryInterface
-    ) {
-        parent::__construct($context);
-
-        $this->sellerRepositoryInterface = $sellerRepositoryInterface;
-    }
-
-    /**
+     * Execute the action
      *
+     * @return \Magento\Framework\View\Result\Page
      */
     public function execute()
     {
-        $result = $this->sellerRepositoryInterface->getList();
+        $searchCriteria = $this->getSearchCriteria();
 
-        foreach ($result->getItems() as $seller) {
-            echo $seller->getIdentifier() . $seller->getName().'<br/>';
+        // get the list of the sellers
+        $result = $this->sellerRepository->getList($searchCriteria);
+
+        // save it to the registry
+        $this->registry->register('seller_search_result', $result);
+
+        // display the page using the layout
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->set(__('Sellers'));
+
+        return $resultPage;
+    }
+
+    /**
+     * Get the search criteria
+     *
+     * @return \Magento\Framework\Api\SearchCriteria
+     */
+    protected function getSearchCriteria()
+    {
+        // get the asked filter name, with protection
+        $searchName = (string) $this->_request->getParam('search_name', '');
+        $searchName = strip_tags($searchName);
+        $searchName = preg_replace('/[\'"%]/', '', $searchName);
+        $searchName = trim($searchName);
+
+        // build the filter, if needed, and add it to the criteria
+        if ($searchName!== '') {
+            // build the filter for the name
+            $filters[] = $this->filterBuilder
+                ->setField(SellerInterface::FIELD_NAME)
+                ->setConditionType('like')
+                ->setValue("%$searchName%")
+                ->create();
+
+            // add the filter to the criteria
+            $this->searchCriteriaBuilder->addFilters($filters);
         }
+
+        // get the asked sort order, with protection
+        $sortOrder = (string) $this->_request->getParam('sort_order');
+        $availableSort = [
+            SortOrder::SORT_ASC,
+            SortOrder::SORT_DESC,
+        ];
+        if (!in_array($sortOrder, $availableSort)) {
+            $sortOrder = $availableSort[0];
+        }
+
+        // build the sort order and add it to the criteria
+        $sort = $this->sortOrderBuilder
+            ->setField(SellerInterface::FIELD_NAME)
+            ->setDirection($sortOrder)
+            ->create();
+        $this->searchCriteriaBuilder->addSortOrder($sort);
+
+        // build the criteria
+        return $this->searchCriteriaBuilder->create();
     }
 }
