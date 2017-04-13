@@ -6,100 +6,123 @@
 namespace Training\Seller\Api\Data;
 
 /**
- * Seller Api interface.
+ * Seller Data Interface
+ *
  * @api
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
  */
 interface SellerInterface
 {
-
     /**
-     * Name of Mysql Name
+     * Name of the Mysql TABLE
      */
-    const TABLE_NAME = 'training_seller';
+    const TABLE_NAME    = 'training_seller';
 
     /**#@+
      * Constants for keys of data array. Identical to the name of the getter in snake case
      */
-    const FIELD_SELLER_ID = 'seller_id';
-    const FIELD_IDENTIFIER = 'identifier';
-    const FIELD_NAME = 'name';
-    const FIELD_CREATED_AT = 'created_at';
-    const FIELD_UPDATED_AT = 'updated_at';
-
+    const FIELD_SELLER_ID   = 'seller_id';
+    const FIELD_IDENTIFIER  = 'identifier';
+    const FIELD_NAME        = 'name';
+    const FIELD_DESCRIPTION = 'description';
+    const FIELD_UPDATED_AT  = 'updated_at';
+    const FIELD_CREATED_AT  = 'created_at';
     /**#@-*/
 
     /**
-     * Get ID
+     * Get field: seller_id
      *
      * @return int|null
      */
     public function getSellerId();
 
     /**
-     * Get identifier
+     * Get field: identifier
      *
      * @return string
      */
     public function getIdentifier();
 
     /**
-     * Get name
+     * Get field: name
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Get creation time
+     * Get field: description
      *
      * @return string|null
      */
-    public function getCreatedAt();
+    public function getDescription();
 
     /**
-     * Get update time
+     * Get field: updated_at
      *
      * @return string|null
      */
     public function getUpdatedAt();
 
     /**
-     * Set ID
+     * Get field: created_at
      *
-     * @param int $id
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @return string|null
      */
-    public function setSellerId($id);
+    public function getCreatedAt();
 
     /**
-     * Set identifier
+     * Set field: seller_id
      *
-     * @param string $identifier
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @param int $value
+     *
+     * @return SellerInterface
      */
-    public function setIdentifier($identifier);
+    public function setSellerId($value);
 
     /**
-     * Set name
+     * Set field: identifier
      *
-     * @param string $name
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @param string $value
+     *
+     * @return SellerInterface
      */
-    public function setName($name);
+    public function setIdentifier($value);
 
     /**
-     * Set creation time
+     * Set field: name
      *
-     * @param string $creationTime
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @param string $value
+     *
+     * @return SellerInterface
      */
-    public function setCreatedAt($creationTime);
+    public function setName($value);
 
     /**
-     * Set update time
+     * Set field: description
      *
-     * @param string $updateTime
-     * @return \Training\Seller\Api\Data\SellerInterface
+     * @param string|null $value
+     *
+     * @return SellerInterface
      */
-    public function setUpdatedAt($updateTime);
+    public function setDescription($value);
+
+    /**
+     * Set field: updated_at
+     *
+     * @param string $value
+     *
+     * @return SellerInterface
+     */
+    public function setUpdatedAt($value);
+
+    /**
+     * Set field: created_at
+     *
+     * @param string $value
+     *
+     * @return SellerInterface
+     */
+    public function setCreatedAt($value);
 }

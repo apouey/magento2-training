@@ -5,48 +5,37 @@
  */
 namespace Training\Seller\Model;
 
-use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Framework\Model\AbstractModel;
 use Training\Seller\Api\Data\SellerInterface;
 
-
 /**
- * Training Seller model
+ * Seller Model
  *
- * @method ResourceCmsBlock _getResource()
- * @method ResourceCmsBlock getResource()
- * @method Block setStoreId(array $storeId)
- * @method array getStoreId()
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
  */
-class Seller extends AbstractModel implements IdentityInterface, SellerInterface
+class Seller extends AbstractModel implements SellerInterface, IdentityInterface
 {
     /**
-     * Training Seller cache tag
+     * Seller cache tag
      */
     const CACHE_TAG = 'training_seller';
 
-
-    /**#@-*/
     /**
      * @var string
      */
     protected $_cacheTag = 'training_seller';
 
     /**
-     * Prefix of model events names
+     * Magento Constructor
      *
-     * @var string
-     */
-    protected $_eventPrefix = 'training_seller';
-
-    /**
      * @return void
      */
     protected function _construct()
     {
         $this->_init('Training\Seller\Model\ResourceModel\Seller');
     }
-
 
     /**
      * Get identities
@@ -71,24 +60,23 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
      */
     public function getIdentifier()
     {
-        return (string)$this->getData(self::FIELD_IDENTIFIER);
+        return (string) $this->getData(self::FIELD_IDENTIFIER);
     }
-
 
     /**
      * @inheritdoc
      */
     public function getName()
     {
-        return (string)$this->getData(self::FIELD_NAME);
+        return (string) $this->getData(self::FIELD_NAME);
     }
 
     /**
      * @inheritdoc
      */
-    public function getCreatedAt()
+    public function getDescription()
     {
-        return (string) $this->getData(self::FIELD_CREATED_AT);
+        return $this->getData(self::FIELD_DESCRIPTION);
     }
 
     /**
@@ -99,6 +87,13 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
         return (string) $this->getData(self::FIELD_UPDATED_AT);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getCreatedAt()
+    {
+        return (string) $this->getData(self::FIELD_CREATED_AT);
+    }
 
     /**
      * @inheritdoc
@@ -127,17 +122,28 @@ class Seller extends AbstractModel implements IdentityInterface, SellerInterface
     /**
      * @inheritdoc
      */
-    public function setCreatedAt($value)
+    public function setDescription($value)
     {
-        return $this->setData(self::FIELD_CREATED_AT, (string) $value);
+        if (!is_null($value)) {
+            $value = (string) $value;
+        }
+
+        return $this->setData(self::FIELD_DESCRIPTION, $value);
     }
 
     /**
      * @inheritdoc
      */
-    function setUpdatedAt($value)
+    public function setUpdatedAt($value)
     {
         return $this->setData(self::FIELD_UPDATED_AT, (string) $value);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function setCreatedAt($value)
+    {
+        return $this->setData(self::FIELD_CREATED_AT, (string) $value);
+    }
 }

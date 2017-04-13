@@ -5,38 +5,27 @@
  */
 namespace Training\Seller\Controller\Adminhtml\Seller;
 
-use Magento\Backend\App\Action\Context;
-use Training\Seller\Api\SellerRepositoryInterface;
-
-class Index extends \Magento\Backend\App\Action
+/**
+ * Admin Action : seller/index
+ *
+ * @author    Laurent MINGUET <lamin@smile.fr>
+ * @copyright 2016 Smile
+ */
+class Index extends AbstractAction
 {
-
-    protected $sellerRepositoryInterface;
-
     /**
-     * Index constructor.
-     * @param Context $context
-     * @param sellerRepositoryInterface $sellerRepositoryInterface
-     */
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        SellerRepositoryInterface $sellerRepositoryInterface
-    ) {
-        parent::__construct($context);
-
-        $this->sellerRepositoryInterface = $sellerRepositoryInterface;
-    }
-
-    /**
+     * Execute the action
      *
+     * @return \Magento\Framework\View\Result\Page
      */
     public function execute()
     {
-        $result = $this->sellerRepositoryInterface->getList();
+        $breadMain = __('Manage Sellers');
 
-        foreach ($result->getItems() as $seller) {
-            echo $seller->getIdentifier() . $seller->getName().'<br/>';
-        }
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Training_Seller::manage');
+        $resultPage->getConfig()->getTitle()->prepend($breadMain);
+
+        return $resultPage;
     }
-
 }
